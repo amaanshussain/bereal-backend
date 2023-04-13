@@ -4,8 +4,6 @@ var router = Router();
 import * as dotenv from 'dotenv'
 dotenv.config();
 
-import fetch from "node-fetch";
-
 import multer from 'multer'
 const upload = multer({ dest: 'uploads/' });
 import fs from 'fs'
@@ -50,6 +48,7 @@ async function uploadToCosmic(files) {
         });
         const url = data.media.url;
         urls.push(url)
+        fs.unlinkSync(file.path)
     }
     return urls;
 }
@@ -75,7 +74,7 @@ router.post('/new', upload.array('file', 2), async function (req, res) {
             const yyyy = date.getFullYear();
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const dd = String(date.getDate()).padStart(2, '0');
-            const formattedDate = `${yyyy}-${mm} -${dd} `;
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
 
             for (let i = 0; i < data.length; i++) {
                 const bereal = data[i];
@@ -121,7 +120,7 @@ router.post('/delete', function (req, res) {
             const yyyy = date.getFullYear();
             const mm = String(date.getMonth() + 1).padStart(2, '0');
             const dd = String(date.getDate()).padStart(2, '0');
-            const formattedDate = `${yyyy} -${mm} -${dd} `;
+            const formattedDate = `${yyyy}-${mm}-${dd}`;
 
             var count = 0;
             for (let i = 0; i < data.length; i++) {
