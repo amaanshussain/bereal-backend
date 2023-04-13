@@ -3,3 +3,4 @@ node_modules
 firebase-admin.json
 config.js
 dbstructure.txt
+uploads/*
