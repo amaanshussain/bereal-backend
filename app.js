@@ -1,11 +1,8 @@
 import express from 'express';
-import { initializeApp } from "firebase/app";
-import config from './config.js'
 
 import Login from './modules/Login.js'
 import Friends from './modules/Friends.js'
-
-const firebaseApp = initializeApp(config);
+import Profile from './modules/Profile.js'
 
 var app = express();
 app.use(express.json()); // read json from request bodys
@@ -16,6 +13,7 @@ app.get('/', function (req, res) {
 
 app.use('/api/login', Login)
 app.use('/api/friends', Friends)
+app.use('/api/profile', Profile)
 
 var server = app.listen(6969, function () {
     console.log('Server is live...');
