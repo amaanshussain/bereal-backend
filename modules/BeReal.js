@@ -100,6 +100,8 @@ router.post('/new', upload.array('file', 2), async function (req, res) {
                 res.send({ "success": "uploaded bereal" })
             })
         })
+    }).catch((error) => {
+        res.send(error)
     })
 })
 
@@ -107,6 +109,7 @@ router.post('/delete', function (req, res) {
     var token = req.headers.authorization;
     if (!token) {
         res.send({ "error": "Please enter a Bearer Token" })
+        return;
     }
     token = token.replace("Bearer ", "");
 
@@ -141,7 +144,23 @@ router.post('/delete', function (req, res) {
     })
 })
 
+router.get('/', function (req, res) {
+    
+    var token = req.headers.authorization;
+    if (!token) {
+        res.send({ "error": "Please enter a Bearer Token" })
+    }
+    token = token.replace("Bearer ", "");
 
+    authorizeToken(token).then((decodedToken) => {
+        const uid = decodedToken.uid;
+
+        getBeReals(uid).then((snapshot) => {
+            const data = snapshot.val();
+            res.send({"bereals": data})
+        })
+    })
+})
 
 
 export default router

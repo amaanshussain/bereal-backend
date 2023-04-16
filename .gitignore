@@ -4,3 +4,4 @@ firebase-admin.json
 config.js
 dbstructure.txt
 uploads/*
+.DS_Store
